@@ -1,23 +1,43 @@
 <template>
   <div>
-    <div class="country-box" @click="showCountryDetails">
-      <b-card>
+    <!-- <div class="country-box" @click="showCountryDetails"> -->
+
+
+
+      <div>
+        <b-card :title="country.name" class="country-box" @click="showCountryDetails">
+          <b-card-text>
+            <img :src="country.flag" :alt="country.name + ' flag'" width="20px" height="20px"/>
+            <div>
+                  <p>Region: {{country.region}}</p>
+                  <p>Population: {{country.population}}</p>
+                  <p>Area: {{country.area}}</p>
+              </div>
+              <div v-show="show">
+                More info.. 
+              </div>
+          </b-card-text>
+
+
+         
+        </b-card>
+      </div>
+      <!-- <b-card class="country-box" @click="showCountryDetails">
         <b-card-text>
-          Some quick example text to build on the card title and make up the bulk of the card's content.
+           <h4>{{country.name}} <img :src="country.flag" :alt="country.name + ' flag'" width="20px" height="20px" /></h4>
+            <div v-show="show">
+                  <p>Region: {{country.region}}</p>
+                  <p>Population: {{country.population}}</p>
+                  <p>Captial: {{country.capital}}</p>
+                  
+              </div>
+         
         </b-card-text>
+      </b-card> -->
 
-        <b-button href="#" variant="primary">Go somewhere</b-button>
-      </b-card>
-
-      <h4>{{country.name}} <img :src="country.flag" :alt="country.name + ' flag'" width="20px" height="20px" /></h4>
-      <div v-show="show">
-            <p>Region: {{country.region}}</p>
-            <p>Population: {{country.population}}</p>
-            <p>Captial: {{country.capital}}</p>
-            
-        </div>
+     
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -40,10 +60,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .country-box {
-  border: 2px solid;
   margin: auto;
   margin-bottom: 5px;
-  width: 60%;
+  width: 50%;
 
 
 }

@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-     <CountriesList :countries="countries"/>
+     <!-- As a heading -->
+    <b-navbar variant="info" type="light">
+      <b-navbar-brand tag="h1" class="mb-0">Countries Directory</b-navbar-brand>
+    </b-navbar>
+    <CountriesList :countries="countries"/>
   </div>
 </template>
 
@@ -41,6 +45,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+nav {
+  margin-bottom: 30px;
 }
 </style>
