@@ -12,10 +12,13 @@
       return {
         text: ''
       }
-    },
-    computed() {
-      this.searchText = this.text
-
     }
+
   }
 </script>
+
+<style scoped>
+input {
+  width: 50%
+}
+</style>

@@ -5,6 +5,7 @@
       <b-navbar-brand tag="h1" class="mb-0">Countries Directory</b-navbar-brand>
     </b-navbar>
     <SearchFilter @search-changed="updateSearchText"/>
+    <RangeFilter :minMaxPopulation="minMaxPopulation" @population-range-changed="updatePopulationRange"/>
     <CountriesList :countries="filteredCountries"/>
   </div>
 </template>
@@ -12,6 +13,7 @@
 <script>
 import CountriesList from './components/CountriesList.vue'
 import SearchFilter from './components/SearchFilter.vue'
+import RangeFilter from './components/RangeFilter.vue'
 import axios from 'axios'
 
 
@@ -19,18 +21,24 @@ export default {
   name: 'App',
   components: {
     CountriesList,
-    SearchFilter
+    SearchFilter,
+    RangeFilter
   },
   data() {
   return {
     countries: [],
-    searchText: ''
+    searchText: '',
+    minMaxPopulation: [],
+    populationRange: [0, 999999999]
+
   }
   },
   computed: {
     // filter countries takes a method which returns true or false
     filteredCountries() {
-      return this.countries.filter(this.countryStartsWith)
+      let filteredCountries = this.countries.filter(this.countryStartsWith)
+      filteredCountries = filteredCountries.filter(this.countryPopulationWithinRange)
+      return filteredCountries
     }
   },
   methods: {
@@ -42,7 +50,35 @@ export default {
     countryStartsWith(country) {
       let name = country.name.toLowerCase(); //startsWith is case sensitive
       return name.startsWith(this.searchText);
+    },
+
+    countryPopulationWithinRange(country) {
+      return country.population < this.populationRange[1] && country.population > this.populationRange[0]
+    },
+
+    calcMinMaxPopulation() {
+    let minPopulation = 0;
+    let maxPopulation = 0;
+    if (this.countries) {
+    minPopulation = this.countries[0].population;
+    maxPopulation = this.countries[0].population;
+    let i;
+    for (i = 1; i < this.countries.length; i++) {
+      if (this.countries[i].population < minPopulation) {
+        minPopulation = this.countries[i].population
+      }
+      if (this.countries[i].population > maxPopulation) {
+      maxPopulation = this.countries[i].population
+      }
     }
+    }
+    return [minPopulation, maxPopulation];
+  },
+
+  updatePopulationRange(range) {
+    this.populationRange = range;
+  }
+  
   },
 
   created() {
@@ -50,7 +86,8 @@ export default {
   axios.get('https://restcountries.eu/rest/v2/all')
   // res is returned from API
   .then(res => {console.log(res);
-                this.countries = res.data})
+                this.countries = res.data;
+                this.minMaxPopulation = this.calcMinMaxPopulation()})
   .catch(err => console.log(err))
 }
 
