@@ -110,7 +110,7 @@ nav {
 }
 
 .navbar-light .navbar-brand {
-    color: #CCCCCC;
+    color: #CCCCCC !important;
 }
 
 </style>
