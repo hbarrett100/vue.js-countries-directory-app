@@ -1,7 +1,7 @@
 <template>
   <div id="app">
      <!-- As a heading -->
-    <b-navbar variant="info" type="light">
+    <b-navbar type="light">
       <b-navbar-brand tag="h1" class="mb-0">Countries Directory</b-navbar-brand>
     </b-navbar>
     <SearchFilter @search-changed="updateSearchText"/>
@@ -106,5 +106,11 @@ export default {
 
 nav {
   margin-bottom: 30px;
+  background-color: #501F3A;
 }
+
+.navbar-light .navbar-brand {
+    color: #CCCCCC;
+}
+
 </style>
