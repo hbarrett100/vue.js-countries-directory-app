@@ -5,7 +5,8 @@
       <b-navbar-brand tag="h1" class="mb-0">Countries Directory</b-navbar-brand>
     </b-navbar>
     <SearchFilter @search-changed="updateSearchText"/>
-    <RangeFilter :minMaxPopulation="minMaxPopulation" @population-range-changed="updatePopulationRange"/>
+    <RangeFilter :minMaxRange="minMaxPopulation" @range-changed="updatePopulationRange"/>
+    <RangeFilter :minMaxRange="minMaxArea" @range-changed="updateAreaRange"/>
     <CountriesList :countries="filteredCountries"/>
   </div>
 </template>
@@ -29,7 +30,9 @@ export default {
     countries: [],
     searchText: '',
     minMaxPopulation: [],
-    populationRange: [0, 999999999]
+    populationRange: [0, 999999999],
+    minMaxArea: [],
+    areaRange: [0, 999999]
 
   }
   },
@@ -37,7 +40,8 @@ export default {
     // filter countries takes a method which returns true or false
     filteredCountries() {
       let filteredCountries = this.countries.filter(this.countryStartsWith)
-      filteredCountries = filteredCountries.filter(this.countryPopulationWithinRange)
+      let popFilteredCountries = filteredCountries.filter(this.countryPopulationWithinRange)
+      filteredCountries = popFilteredCountries.filter(this.countryAreaWithinRange)
       return filteredCountries
     }
   },
@@ -56,29 +60,47 @@ export default {
       return country.population < this.populationRange[1] && country.population > this.populationRange[0]
     },
 
+    countryAreaWithinRange(country) {
+      return country.area < this.areaRange[1] && country.area > this.areaRange[0]
+    },
+
     calcMinMaxPopulation() {
     let minPopulation = 0;
     let maxPopulation = 0;
     if (this.countries) {
-    minPopulation = this.countries[0].population;
     maxPopulation = this.countries[0].population;
     let i;
     for (i = 1; i < this.countries.length; i++) {
-      if (this.countries[i].population < minPopulation) {
-        minPopulation = this.countries[i].population
-      }
       if (this.countries[i].population > maxPopulation) {
       maxPopulation = this.countries[i].population
       }
     }
     }
-    return [minPopulation, maxPopulation];
+    return [minPopulation, maxPopulation]
   },
 
+  calcMinMaxArea() {
+    let minArea = 0;
+    let maxArea = 0;
+    if (this.countries) {
+    maxArea = this.countries[0].area;
+    let i;
+    for (i = 1; i < this.countries.length; i++) {
+      if (this.countries[i].area > maxArea) {
+      maxArea = this.countries[i].area
+      }
+    }
+    }
+    return [minArea, maxArea]
+  },
+  
   updatePopulationRange(range) {
     this.populationRange = range;
+  },
+
+   updateAreaRange(range) {
+    this.areaRange = range;
   }
-  
   },
 
   created() {
@@ -87,7 +109,8 @@ export default {
   // res is returned from API
   .then(res => {console.log(res);
                 this.countries = res.data;
-                this.minMaxPopulation = this.calcMinMaxPopulation()})
+                this.minMaxPopulation = this.calcMinMaxPopulation()
+                this.minMaxArea = this.calcMinMaxArea()})
   .catch(err => console.log(err))
 }
 

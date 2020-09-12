@@ -2,11 +2,11 @@
   <div>
     <VueSimpleRangeSlider
                     style="width: 300px"
-                    :min="minMaxPopulation[0]"
-                    :max="minMaxPopulation[1]"
+                    :min="minMaxRange[0]"
+                    :max="minMaxRange[1]"
                     :logarithmic="true"
                     v-model="range"
-                    @input="$emit('population-range-changed', range)"
+                    @input="$emit('range-changed', range)"
             />
   </div>
 </template>
@@ -18,12 +18,14 @@ export default {
     components: { VueSimpleRangeSlider },
     data() {
           return {
-               range: [0, 1377422166]
+               range: []
           }
     },
-    props: ["minMaxPopulation"],
-    methods: {
-
+    props: ["minMaxRange"],
+    watch: {
+    minMaxRange: function() {
+      this.range = this.minMaxRange
+    }
     }
 }
 </script> 
