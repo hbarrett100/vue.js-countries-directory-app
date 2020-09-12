@@ -22,6 +22,8 @@ export default {
           }
     },
     props: ["minMaxRange"],
+
+    //watch for change in minMaxRange prop
     watch: {
     minMaxRange: function() {
       this.range = this.minMaxRange

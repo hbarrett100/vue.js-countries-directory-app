@@ -7,6 +7,7 @@
     <SearchFilter @search-changed="updateSearchText"/>
     <RangeFilter :minMaxRange="minMaxPopulation" @range-changed="updatePopulationRange"/>
     <RangeFilter :minMaxRange="minMaxArea" @range-changed="updateAreaRange"/>
+    <DropdownFilter :regions="countryRegions" @dropdown-value-changed="updateRegion"/>
     <CountriesList :countries="filteredCountries"/>
   </div>
 </template>
@@ -15,6 +16,7 @@
 import CountriesList from './components/CountriesList.vue'
 import SearchFilter from './components/SearchFilter.vue'
 import RangeFilter from './components/RangeFilter.vue'
+import DropdownFilter from './components/DropdownFilter.vue'
 import axios from 'axios'
 
 
@@ -23,8 +25,10 @@ export default {
   components: {
     CountriesList,
     SearchFilter,
-    RangeFilter
+    RangeFilter,
+    DropdownFilter
   },
+
   data() {
   return {
     countries: [],
@@ -32,7 +36,8 @@ export default {
     minMaxPopulation: [],
     populationRange: [0, 999999999],
     minMaxArea: [],
-    areaRange: [0, 999999]
+    areaRange: [0, 999999],
+    countryRegions: [],
 
   }
   },
@@ -40,8 +45,9 @@ export default {
     // filter countries takes a method which returns true or false
     filteredCountries() {
       let filteredCountries = this.countries.filter(this.countryStartsWith)
-      let popFilteredCountries = filteredCountries.filter(this.countryPopulationWithinRange)
-      filteredCountries = popFilteredCountries.filter(this.countryAreaWithinRange)
+      filteredCountries = filteredCountries.filter(this.countryPopulationWithinRange)
+      filteredCountries = filteredCountries.filter(this.countryAreaWithinRange)
+      filteredCountries = filteredCountries.filter(this.countryWithinRegion)
       return filteredCountries
     }
   },
@@ -62,6 +68,10 @@ export default {
 
     countryAreaWithinRange(country) {
       return country.area < this.areaRange[1] && country.area > this.areaRange[0]
+    },
+
+    countryWithinRegion(country) {
+      return this.countryRegions.includes(country.region); 
     },
 
     calcMinMaxPopulation() {
@@ -93,13 +103,28 @@ export default {
     }
     return [minArea, maxArea]
   },
+
+  getAllRegions() {
+    let countryRegions = [];
+    this.countries.forEach(country => {
+    if (! countryRegions.includes(country.region)) {
+          countryRegions.push(country.region)
+        }
+    });
+    return countryRegions;
+  },
   
   updatePopulationRange(range) {
     this.populationRange = range;
   },
 
-   updateAreaRange(range) {
+  updateAreaRange(range) {
     this.areaRange = range;
+  },
+
+  updateRegion(value) {
+    this.countryRegions = value;
+
   }
   },
 
@@ -110,7 +135,8 @@ export default {
   .then(res => {console.log(res);
                 this.countries = res.data;
                 this.minMaxPopulation = this.calcMinMaxPopulation()
-                this.minMaxArea = this.calcMinMaxArea()})
+                this.minMaxArea = this.calcMinMaxArea()
+                this.countryRegions = this.getAllRegions()})
   .catch(err => console.log(err))
 }
 
