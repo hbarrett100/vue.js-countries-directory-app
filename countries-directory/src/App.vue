@@ -38,6 +38,7 @@ export default {
     minMaxArea: [],
     areaRange: [0, 999999],
     countryRegions: [],
+    filterRegions: []
 
   }
   },
@@ -71,7 +72,7 @@ export default {
     },
 
     countryWithinRegion(country) {
-      return this.countryRegions.includes(country.region); 
+      return this.filterRegions.includes(country.region); 
     },
 
     calcMinMaxPopulation() {
@@ -105,6 +106,7 @@ export default {
   },
 
   getAllRegions() {
+    // populate array with all regions
     let countryRegions = [];
     this.countries.forEach(country => {
     if (! countryRegions.includes(country.region)) {
@@ -123,11 +125,14 @@ export default {
   },
 
   updateRegion(value) {
-    this.countryRegions = value;
-
+    // if no regions chosen revert back to full list of options
+    if (value && value.length > 0) {
+      this.filterRegions = value
+    } else {
+      this.filterRegions = this.countryRegions
+    }
   }
   },
-
   created() {
   //axios used for HTTP requests
   axios.get('https://restcountries.eu/rest/v2/all')
@@ -136,10 +141,10 @@ export default {
                 this.countries = res.data;
                 this.minMaxPopulation = this.calcMinMaxPopulation()
                 this.minMaxArea = this.calcMinMaxArea()
-                this.countryRegions = this.getAllRegions()})
+                this.countryRegions = this.getAllRegions()
+                this.filterRegions = this.countryRegions})
   .catch(err => console.log(err))
 }
-
 }
 
 </script>
