@@ -8,7 +8,9 @@
     <RangeFilter :minMaxRange="minMaxPopulation" @range-changed="updatePopulationRange"/>
     <RangeFilter :minMaxRange="minMaxArea" @range-changed="updateAreaRange"/>
     <DropdownFilter :regions="countryRegions" @dropdown-value-changed="updateRegion"/>
+    <SortDropdown @sort-value-changed="sortCountries"/>
     <CountriesList :countries="filteredCountries"/>
+    
   </div>
 </template>
 
@@ -17,6 +19,7 @@ import CountriesList from './components/CountriesList.vue'
 import SearchFilter from './components/SearchFilter.vue'
 import RangeFilter from './components/RangeFilter.vue'
 import DropdownFilter from './components/DropdownFilter.vue'
+import SortDropdown from './components/SortDropdown.vue'
 import axios from 'axios'
 
 
@@ -26,7 +29,8 @@ export default {
     CountriesList,
     SearchFilter,
     RangeFilter,
-    DropdownFilter
+    DropdownFilter,
+    SortDropdown
   },
 
   data() {
@@ -38,7 +42,7 @@ export default {
     minMaxArea: [],
     areaRange: [0, 999999],
     countryRegions: [],
-    filterRegions: []
+    filterRegions: [],
 
   }
   },
@@ -131,6 +135,28 @@ export default {
     } else {
       this.filterRegions = this.countryRegions
     }
+  },
+  compareName(a,b) {
+    return (a.name).localeCompare(b.name);
+  },
+  comparePopulation(a,b){
+    return a.population-b.population
+  },
+  compareArea(a,b) {
+    return a.area-b.area
+  },
+  // sort countries based on value emitted from sort dropdown
+  sortCountries(selected) {  
+    let sortBySplit = selected.split('-')
+    if (sortBySplit[0] == 'name') {
+        this.countries.sort(this.compareName) 
+    } else if (sortBySplit[0] == 'pop') {
+        this.countries.sort(this.comparePopulation)
+    } else if (sortBySplit[0] == 'area') {
+        this.countries.sort(this.compareArea)
+    } if (sortBySplit[1] == 'reversed'){
+          this.countries.reverse()
+        }
   }
   },
   created() {
