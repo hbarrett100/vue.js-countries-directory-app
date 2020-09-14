@@ -1,6 +1,7 @@
 <template>
   <div>
-    <b-card :title="country.name" class="country-box" @click="showCountryDetails">
+    <b-card class="country-box" @click="showCountryDetails">
+      <h4 class="border-bottom pb-2 mb-3">{{ country.name }}</h4>
       <b-media right-align vertical-align="center" class="country-box">
         <template v-slot:aside>
           <b-img :src="country.flag" :alt="country.name + ' flag'" width="120px" height="80px"></b-img>
@@ -50,12 +51,15 @@ export default {
 <style scoped>
 .country-box {
   margin: auto;
-
   width: 80%;
   margin-top: 10px;
 }
 
 .card-text {
   text-align: left;
+}
+
+.card:hover {
+  background-color:#F2F2F2;
 }
 </style>

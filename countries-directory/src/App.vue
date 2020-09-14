@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <b-navbar type="light">
-      <b-navbar-brand tag="h1" class="ml-4">Countries Directory</b-navbar-brand>
+      <b-navbar-brand tag="h1" class="ml-4 mt-2">Countries Directory</b-navbar-brand>
     </b-navbar>
     <b-container fluid>
       <b-row>
@@ -26,8 +26,6 @@
             </b-col>
           </b-row>
         </b-col>
-    
-   
       </b-row>
     </b-container>
   </div>
@@ -206,11 +204,12 @@ export default {
 
 nav {
   margin-bottom: 30px;
-  background-color: #501F3A;
+  background-color: #E98074;
 }
 
 .navbar-light .navbar-brand {
-    color: #CCCCCC !important;
+    color: #505050 !important;
+    font-size: 1.4em;
 }
 
 #filters {
@@ -223,7 +222,7 @@ nav {
 }
 
 #countries-col {
-  max-height: calc(100vh - 94px);
+  max-height: calc(100vh - 104px);
   overflow-y: scroll;
 }
 
