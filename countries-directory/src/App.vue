@@ -11,7 +11,7 @@
           <RangeFilter :minMaxRange="minMaxArea" :label="'Area Range:'" @range-changed="updateAreaRange"/>
           <DropdownFilter :regions="countryRegions" @dropdown-value-changed="updateRegion"/>
         </b-col>
-        <b-col cols="9">
+        <b-col cols="9" id="countries-col">
           <b-row align-h="center"> 
             <b-col cols="6">
               <SearchFilter @search-changed="updateSearchText"/>
@@ -59,7 +59,7 @@ export default {
     minMaxPopulation: [],
     populationRange: [0, 999999999],
     minMaxArea: [],
-    areaRange: [0, 999999],
+    areaRange: [0, 9999999999999],
     countryRegions: [],
     filterRegions: [],
 
@@ -220,6 +220,11 @@ nav {
 
 #filter-header {
   text-align: left;
+}
+
+#countries-col {
+  max-height: calc(100vh - 94px);
+  overflow-y: scroll;
 }
 
 </style>
