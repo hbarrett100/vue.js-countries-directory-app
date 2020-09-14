@@ -1,7 +1,8 @@
 <template>
   <div>
+    <label>{{ label }}</label>
     <VueSimpleRangeSlider
-                    style="width: 300px"
+                    style="width: 250px"
                     :min="minMaxRange[0]"
                     :max="minMaxRange[1]"
                     :logarithmic="true"
@@ -21,7 +22,7 @@ export default {
                range: []
           }
     },
-    props: ["minMaxRange"],
+    props: ["minMaxRange", "label"],
 
     //watch for change in minMaxRange prop
     watch: {
@@ -31,4 +32,12 @@ export default {
     }
 }
 </script> 
+
+<style scoped>
+label {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+</style>
 

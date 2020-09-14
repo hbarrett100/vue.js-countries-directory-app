@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <b-form-input v-model="text" placeholder="Enter country name" @keyup="$emit('search-changed', text)"></b-form-input>
+    <b-form-input v-model="text" placeholder="Search country name.." @keyup="$emit('search-changed', text)"></b-form-input>
   </div>
 </template>
 

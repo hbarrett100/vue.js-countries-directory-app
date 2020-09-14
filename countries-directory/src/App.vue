@@ -1,16 +1,35 @@
 <template>
   <div id="app">
-     <!-- As a heading -->
     <b-navbar type="light">
-      <b-navbar-brand tag="h1" class="mb-0">Countries Directory</b-navbar-brand>
+      <b-navbar-brand tag="h1" class="ml-4">Countries Directory</b-navbar-brand>
     </b-navbar>
-    <SearchFilter @search-changed="updateSearchText"/>
-    <RangeFilter :minMaxRange="minMaxPopulation" @range-changed="updatePopulationRange"/>
-    <RangeFilter :minMaxRange="minMaxArea" @range-changed="updateAreaRange"/>
-    <DropdownFilter :regions="countryRegions" @dropdown-value-changed="updateRegion"/>
-    <SortDropdown @sort-value-changed="sortCountries"/>
-    <CountriesList :countries="filteredCountries"/>
+    <b-container fluid>
+      <b-row>
+        <b-col id="filters" cols="3">
+          <h4 id="filter-header">Filter</h4>
+          <RangeFilter :minMaxRange="minMaxPopulation" :label="'Population Range:'" @range-changed="updatePopulationRange"/>
+          <RangeFilter :minMaxRange="minMaxArea" :label="'Area Range:'" @range-changed="updateAreaRange"/>
+          <DropdownFilter :regions="countryRegions" @dropdown-value-changed="updateRegion"/>
+        </b-col>
+        <b-col cols="9">
+          <b-row align-h="center"> 
+            <b-col cols="6">
+              <SearchFilter @search-changed="updateSearchText"/>
+            </b-col>
+            <b-col cols="3">
+             <SortDropdown @sort-value-changed="sortCountries"/>
+            </b-col>
+          </b-row>
+          <b-row> 
+            <b-col cols="12">
+            <CountriesList :countries="filteredCountries"/>
+            </b-col>
+          </b-row>
+        </b-col>
     
+   
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -43,6 +62,7 @@ export default {
     areaRange: [0, 999999],
     countryRegions: [],
     filterRegions: [],
+
 
   }
   },
@@ -193,4 +213,14 @@ nav {
     color: #CCCCCC !important;
 }
 
+#filters {
+  padding-left: 70px;
+  text-align: left;
+}
+
+#filter-header {
+  text-align: left;
+}
+
 </style>
+ 

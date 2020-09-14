@@ -1,59 +1,46 @@
 <template>
   <div>
-    <!-- <div class="country-box" @click="showCountryDetails"> -->
-
-
-
-      <div>
-        <b-card :title="country.name" class="country-box" @click="showCountryDetails">
-          <b-card-text>
-            <img :src="country.flag" :alt="country.name + ' flag'" width="20px" height="20px"/>
-            <div>
-                  <p>Region: {{country.region}}</p>
-                  <p>Population: {{country.population}}</p>
-                  <p>Area: {{country.area}}</p>
-              </div>
-              <div v-show="show">
-                More info.. 
-              </div>
-          </b-card-text>
-
-
-         
-        </b-card>
-      </div>
-      <!-- <b-card class="country-box" @click="showCountryDetails">
+    <b-card :title="country.name" class="country-box" @click="showCountryDetails">
+      <b-media right-align vertical-align="center" class="country-box">
+        <template v-slot:aside>
+          <b-img :src="country.flag" :alt="country.name + ' flag'" width="120px" height="80px"></b-img>
+        </template>
         <b-card-text>
-           <h4>{{country.name}} <img :src="country.flag" :alt="country.name + ' flag'" width="20px" height="20px" /></h4>
-            <div v-show="show">
-                  <p>Region: {{country.region}}</p>
-                  <p>Population: {{country.population}}</p>
-                  <p>Captial: {{country.capital}}</p>
-                  
-              </div>
-         
+          <div>
+            <p>Region: {{country.region}}</p>
+            <p>Population: {{country.population}}</p>
+            <p>Area: {{country.area}}</p>
+          </div>
         </b-card-text>
-      </b-card> -->
-
-     
-    </div>
-  <!-- </div> -->
+      </b-media>
+      <b-button block variant="primary-outline"><b-icon :icon="show ? 'chevron-compact-up' : 'chevron-compact-down'"/></b-button>
+      <b-collapse v-model="show">
+        <b-card-text class="country-box">
+          <div v-show="show">
+            <p>Capital: {{country.capital}}</p>
+            <p>Timezone: {{country.timezones}}</p>
+          </div>
+        </b-card-text>
+      </b-collapse>
+    </b-card>
+  </div>
 </template>
 
 <script>
+
 export default {
   name: "Country",
   props: ["country"],
   data() {
-      return {
-          show: false
-      }
+    return {
+      show: false,
+    };
   },
   methods: {
-        showCountryDetails() {
-            this.show= !this.show;
-        }
-    }
+    showCountryDetails() {
+      this.show = !this.show;
+    },
+  },
 };
 </script>
 
@@ -61,9 +48,12 @@ export default {
 <style scoped>
 .country-box {
   margin: auto;
-  margin-bottom: 5px;
-  width: 50%;
 
+  width: 80%;
+  margin-top: 10px;
+}
 
+.card-text {
+  text-align: left;
 }
 </style>
