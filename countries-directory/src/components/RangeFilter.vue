@@ -5,6 +5,8 @@
                     style="width: 250px"
                     :min="minMaxRange[0]"
                     :max="minMaxRange[1]"
+                    barColor="#E98074"
+                    activeBarColor="#E98074"
                     :logarithmic="true"
                     v-model="range"
                     @input="$emit('range-changed', range)"
@@ -37,6 +39,7 @@ export default {
 label {
   margin-bottom: 15px;
   text-align: left;
+  font-size: 1.1em;
 }
 
 </style>

@@ -200,10 +200,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #758494;
+  overflow-y: hidden;
 }
 
 nav {
-  margin-bottom: 30px;
   background-color: #E98074;
 }
 
@@ -215,6 +215,7 @@ nav {
 #filters {
   padding-left: 70px;
   text-align: left;
+  padding-top: 30px;
 }
 
 #filter-header {
@@ -222,8 +223,9 @@ nav {
 }
 
 #countries-col {
-  max-height: calc(100vh - 104px);
+  max-height: calc(100vh - 75px);
   overflow-y: scroll;
+  padding-top: 30px;
 }
 
 </style>

@@ -61,5 +61,6 @@ export default {
 
 .card:hover {
   background-color:#F2F2F2;
+  cursor: pointer;
 }
 </style>
