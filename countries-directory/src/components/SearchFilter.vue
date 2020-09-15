@@ -21,4 +21,10 @@
 input {
   width: 50%
 }
+
+@media only screen and (max-width: 768px) {
+  input {
+  width: 100%
+  }
+}
 </style>

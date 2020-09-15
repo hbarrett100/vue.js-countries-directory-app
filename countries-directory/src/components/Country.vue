@@ -63,4 +63,12 @@ export default {
   background-color:#F2F2F2;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 768px) {
+  .country-box {
+  margin: auto;
+  width: 90%;
+  margin-top: 10px;
+}
+}
 </style>
