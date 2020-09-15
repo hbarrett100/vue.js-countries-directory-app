@@ -20,7 +20,7 @@
           <div v-show="show">
             <p>Capital: {{country.capital}}</p>
             <p>Timezones: <span v-for="(timezone, index) in country.timezones" :key="index"><span v-if="index != 0">, </span>{{timezone}}</span></p>
-            <p>Currencies: <span v-for="(currency, index) in country.currencies" :key="index">{{currency.name}}</span></p>
+            <p>Currencies: <span v-for="(currency, index) in country.currencies" :key="index"><span v-if="index != 0">, </span>{{currency.name}}</span></p>
             <p>Languages: <span v-for="(language, index) in country.languages" :key="index"><span v-if="index != 0">, </span>{{language.name}}</span></p>
           </div>
         </b-card-text>
